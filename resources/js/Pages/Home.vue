@@ -37,9 +37,9 @@ onMounted(() => {
                 :transition="500"
                 snapAlign="start"
             >
-                <Slide v-for="slide in 10" :key="slide">
+                <Slide v-for="slide in allUsers" :key="slide">
                     <Link
-                        href="/"
+                        :href="route('users.show', {id: slide.id})"
                         class="relative mx-auto text-center mt-4 px-2 cursor-pointer"
                     >
                         <div
@@ -51,13 +51,13 @@ onMounted(() => {
                         </div>
                         <img
                             class="rounded-full w-[56px] h-[56px] -mt-[1px]"
-                            src="https://picsum.photos/id/54/300/320"
+                            :src="slide.file"
                             alt=""
                         />
                         <div
                             class="text-xs mt-2 w-[60px] truncate text-ellipsis overflow-hidden"
                         >
-                            NAME HERE
+                           {{slide.name}}
                         </div>
                     </Link>
                 </Slide>
@@ -66,16 +66,16 @@ onMounted(() => {
                 </template>
             </Carousel>
 
-            <div id="Posts" class="px-4 mx-w-[600px] mx-auto mt-10">
+            <div id="Posts" class="px-4 mx-w-[600px] mx-auto mt-10" v-for="post in posts.data" :key="post">
                 <div class="flex items-center justify-between py-2">
                     <div class="flex items-center">
-                        <Link href="/" class="flex items-center">
+                        <Link :href="route('users.show', {id: post.user.id})" class="flex items-center">
                             <img
                                 class="rounded-full w-[38px] h-[38px]"
-                                src="https://picsum.photos/id/54/300/320"
+                                :src="post.user.file"
                             />
                             <div class="text-[15px] ml-4 font-extrabold">
-                                NAME HERE
+                                {{ post.user.name }}
                             </div>
                         </Link>
                         <div
@@ -84,7 +84,7 @@ onMounted(() => {
                             <span class="-mt-5 ml-2 mr-[5px] text-[35px]">
                                 .
                             </span>
-                            <div>DATE HERE</div>
+                            <div>{{post.created_at}}</div>
                         </div>
                     </div>
                     <DotsHorizontal class="cursor-pointer" :size="27" />
@@ -94,19 +94,22 @@ onMounted(() => {
                 >
                     <img
                         class="mx-auto w-full"
-                        src="https://picsum.photos/id/54/300/320"
+                        :src="post.file"
                     />
                 </div>
-                <LikeSection />
-                <div class="text-black font-extrabold py-1">3 likes</div>
+                <LikeSection 
+					:post="post"
+					@Likes="$event => updateLike($event)"
+				/>
+                <div class="text-black font-extrabold py-1">{{ post.likes.length }} likes</div>
                 <div>
-                    <span class="text-black font-extrabold"> NAME HERE</span>
-                    this is some text here
+                    <span class="text-black font-extrabold"> {{ post.user.name }}</span>
+                    {{ post.text }}
                 </div>
                 <button 
-				@click="$event => openOverlay = true"
+				@click="$event => currentPost = post; openOverlay = true"
 				class="text-gray-500 font-extrabold py-1">
-                    View all 4 comments
+                    View all {{post.comments.length}} comments
                 </button>
             </div>
                 <div class="pb-20"></div>

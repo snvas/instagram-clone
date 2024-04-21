@@ -34,21 +34,24 @@ const textareaInput = (e) => {
 		<div class="max-x-6xl h-[calc(100%-100px)] mx-auto mt-10 bg-white rounded-xl">
 			<div class="w-full md:flex h-full overflow-auto rounded-xl">
 				<div class="flex items-center bg-black w-full">
-					<img class="rounded-xl min-w-[400px] p-4 mx-auto" src="https://picsum.photos/id/54/800/820" />
+					<img class="rounded-xl min-w-[400px] p-4 mx-auto" :src="post.file" />
 				</div>
 				<div class="md:max-w-[500px] w-full relative">
 					<div class="flex items-center justify-between p-3 border-b">
 						<div class="flex items-center">
-							<img class="rounded-full w-[38px] h-[38px]" src="https://picsum.photos/id/54/800/820" />
+							<img class="rounded-full w-[38px] h-[38px]" :src="post.user.file" />
 							<div class="ml-4 font-extrabold text-[15px]">
-								NAME HERE
+								{{ post.user.name }}
 							</div>
 							<div class="flex items-center text-[15px] text-gray-500">
 								<span class="-mt-5 ml-2 mr-[5px] text-[35px]">.</span>
-								<div>DATE HERE</div>
+								<div>{{ post.created_at }}</div>
 							</div>
 						</div>
-						<button>
+						<button
+							v-if="user=id === post-user.id"
+							@click="$event => deleteType = 'Post'; id = post.id"
+						>
 							<DotsHorizontal class="cursor-pointer" :size="27" />
 						</button>
 					</div>
