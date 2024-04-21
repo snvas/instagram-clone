@@ -90,7 +90,7 @@ const closeOverlay = () => {
                     @click="closeOverlay()"
                 />
                 <div class="text-lg font-extrabold">New reel</div>
-                <button
+                <button @click="$event=> createPostFunc()"
                     class="text-lg text-blue-500 hover:text-gray-900 font-extrabold"
                 >
                     Share
