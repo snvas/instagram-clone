@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
-use Intervention\Image\Laravel\Facades\Image;
-use Intervention\Image\ImageManager;
+use Image;
 
 
 class FileService

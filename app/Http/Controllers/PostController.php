@@ -20,20 +20,10 @@ class PostController extends Controller
 			'text' => 'required'
 		]);
 		$post = (new FileService)->updateFile($post, $request, 'post');
-		$post->user->id = auth()->user()->id;
+		$post->user_id = auth()->user()->id;
 		$post->text = $request->input('text');
 		$post->save();
     }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
 
     /**
      * Remove the specified resource from storage.
