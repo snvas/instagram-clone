@@ -58,31 +58,42 @@ const textareaInput = (e) => {
 					<div class="overflow-y-auto h-[calc(100%-170px)]">
 						<div class="flex items-center justify-between p-3">
 							<div class="flex items-center relative">
-								<img class="absolute -top-1 rounded-full w-[38px] h-[38px]" src="https://picsum.photos/id/54/800/820" />
+								<img class="absolute -top-1 rounded-full w-[38px] h-[38px]" :src="post.user.file" />
 								<div class="ml-14">
-									<span class="font-extrabold text-[15px] mr-2">NAME HERE</span>
-									<span class="text-[15px] text-gray-900">THIS IS A COMMENT</span>
+									<span class="font-extrabold text-[15px] mr-2">{{ post.user.name }}</span>
+									<span class="text-[15px] text-gray-900">{{ post.text}}</span>
 								</div>
 							</div>
 						</div>
-						<div class="p-3">
+						<div 
+						v-if="post.comments"
+						v-for="comment in post.comments"
+						:key="comment"
+						class="p-3">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center">
-									<img class="rounded-full w-[38px] h-[38px]" src="https://picsum.photos/id/54/800/820" />
+									<img class="rounded-full w-[38px] h-[38px]" :src="comment.user.file" />
 									<div class="ml-4 font-extrabold text-[15px]">
-										NAME HERE
-										<span class="text-sm font-light text-gray-700">DATE HERE</span>
+										{{ comment.user.name }}
+										<span class="text-sm font-light text-gray-700">{{ comment.created_at }}</span>
 									</div>
 								</div>
-								<DotsHorizontal class="cursor-pointer" :size="27" />
+								<DotsHorizontal 
+								v-if="user.id === comment.user.id"
+								@click="$event => deleteType = 'Comment'; id = comment.id"
+								class="cursor-pointer" :size="27" />
 							</div>
 							<div class="text-[13px] pl-[55px]">
-								THIS COMMENT SECTION
+								{{ comment.text }}
 							</div>
 						</div>
 						<div class="pb-16 md:hidden"></div>
 					</div>
-					<LikeSection class="px-2 border-t mb-2"/>
+					<LikeSection 
+					v-if="post"
+					:post="post"
+					@like="$emit('updateLike', $event)"
+					class="px-2 border-t mb-2"/>
 					<div class="absolute flex border bottom-0 w-full max-h-[200px] bg-white overflow-auto">
 						<EmoticonHappyOutline class="pl-3 pt-[10px]" :size="30" />
 						<textarea 
@@ -94,6 +105,7 @@ const textareaInput = (e) => {
 						class="w-full border-0 mt-2 mb-2 text-sm z-50 focus:ring-0 text-gray-600 text-[18px]"
 						></textarea>
 						<button v-if="comment"
+						@click="$event => $emit('addComment', {post, user, comment}); comment = ''"
 						class="text-blue-600 font-extrabold pr-4">
 							Post
 						</button>
@@ -102,5 +114,19 @@ const textareaInput = (e) => {
 			</div>
 		</div>
 	</div>
-	<ShowPostOptionsOverlay v-if="deleteType"/>
+	<ShowPostOptionsOverlay 
+	v-if="deleteType"
+	:deleteType="deleteType"
+	:id="id"
+	@deleteSelected="$event => $emit('deleteSelected', {
+		deleteType: $event.deleteType,
+		id: $event.id,
+		post: post,
+	})
+	deleteType = null;
+	id = null;
+	"
+
+	@close="$event => deleteType = null; id = null"
+	/>
 </template>
