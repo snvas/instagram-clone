@@ -89,7 +89,7 @@ const getUploadedImage = (e) => {
     <Head title="Instagram" />
     <MainLayout>
         <div class="pt-2 md:pt-6"></div>
-        <div class="max-w-[800px] lg:ml-0 md:ml-[80px] md:pl-20 w-[100vw]">
+        <div class="max-w-[880px] lg:ml-0 md:ml-[80px] md:pl-20 w-[100vw]">
             <div class="flex items-center md:justify-between">
                 <label for="fileUser">
                     <img
