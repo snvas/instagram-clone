@@ -7,7 +7,7 @@ import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
 import MapMarkertOutline from "vue-material-design-icons/MapMarkerOutline.vue";
 import ChevronDown from "vue-material-design-icons/ChevronDown.vue";
 
-//const user = usePage().props.auth.user
+const user = usePage().props.auth.user
 const emit = defineEmits(["close"]);
 
 const form = reactive({
