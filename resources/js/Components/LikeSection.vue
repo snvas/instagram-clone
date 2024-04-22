@@ -24,6 +24,7 @@ const isHeartActiveComputed = computed(() => {
 			isTrue = true
 		}
 	}
+	return isTrue
 
 })
 </script>

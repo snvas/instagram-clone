@@ -17,7 +17,6 @@ const form = reactive({ file: null });
 const props = defineProps({ postsByUser: Object, user: Object });
 const { postsByUser, user } = toRefs(props);
 
-
 const addComment = (object) => {
 	router.post('/comments', {
 		post_id: object.post.id,
@@ -27,7 +26,6 @@ const addComment = (object) => {
 		onFinish: () => updatedPost(object),
 	})
 }
-
 
 const deleteFunc = (object) => {
 	let url = ''
@@ -42,7 +40,6 @@ const deleteFunc = (object) => {
 		onFinish: () => updatedPost(object),
 	})
 }
-
 
 const updateLike = (object) => {
 	let deleteLike = false
@@ -89,7 +86,7 @@ const getUploadedImage = (e) => {
     <Head title="Instagram" />
     <MainLayout>
         <div class="pt-2 md:pt-6"></div>
-        <div class="max-w-[880px] lg:ml-0 md:ml-[80px] md:pl-20 w-[100vw]">
+        <div class="max-w-[880px] lg:ml-0 md:ml-[80px] md:pl-20 w-[100vw] px-4">
             <div class="flex items-center md:justify-between">
                 <label for="fileUser">
                     <img
@@ -241,15 +238,15 @@ const getUploadedImage = (e) => {
                         <div class="ml-2 -mb-[1px] text-gray-900">TAGGED</div>
                     </div>
                 </div>
-            </div>
-            <div class="grip md:gap-4 gap-1 grid-cols-3 relative">
-				<div v-for="postByUser in postsByUser.data" :key="postByUser">
+            <div class="grid grid-cols-3 md:gap-4 gap-1 relative">
+				<div v-for="postByUser in postsByUser.dat`ra" :key="postByUser">
 					<ContentOverlay
 					:postByUser="postByUser"
 					@selectedPost="$event => data.post = $event"
 					/>
 				</div>
             </div>
+		</div>
 			<div class="pb-20"></div>
         </div>
     </MainLayout>
